@@ -14,4 +14,19 @@ export class UsersRepository {
             console.error(err)
         }
     }
+
+    findEmail = async (email) => {
+        try {
+
+            const existEmail = await users.find({ email: email }) // 배열로 반환
+            console.log(existEmail)
+            if (existEmail) {
+                return existEmail;
+            }
+
+        } catch (err) {
+            console.error(err)
+        }
+
+    }
 }

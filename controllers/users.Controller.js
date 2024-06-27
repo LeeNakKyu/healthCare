@@ -6,7 +6,9 @@ export class UsersController {
         try {
             const { email, password, name, height, weight } = req.body;
             
-            if (!email) {
+            const existEmail = await this.usersService.findEmail(email);
+
+            if (!email || existEmail >= 1) {
                 return res.status(400).json({ message: "email 을 입력해주세요" })
             }
             if (!password) {

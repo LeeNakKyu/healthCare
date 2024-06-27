@@ -13,4 +13,14 @@ export class UsersService {
         }
     }
 
+    findEmail = async (email) => {
+        try {
+
+            return this.usersRepository.findEmail(email);
+
+        } catch (err) {
+            console.error(err)
+        }
+    }
+
 }

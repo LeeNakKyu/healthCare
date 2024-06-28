@@ -1,5 +1,5 @@
 import { UsersRepository } from "../repositories/users.Repository.js";
-
+import JWT from 'jsonwebtoken';
 export class UsersService {
     usersRepository = new UsersRepository();
 
@@ -21,6 +21,14 @@ export class UsersService {
         } catch (err) {
             console.error(err)
         }
+    }
+
+
+    createToken = async (email, password) => {
+
+        const token = JWT.sign({ email: email }, 'mySecretKey', { expiresIn: '1h' });
+
+        return token;
     }
 
 }

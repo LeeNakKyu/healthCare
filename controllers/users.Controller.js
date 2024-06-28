@@ -5,7 +5,7 @@ export class UsersController {
     signUp = async (req, res) => {
         try {
             const { email, password, name, height, weight } = req.body;
-            
+
             const existEmail = await this.usersService.findEmail(email);
 
             if (!email || existEmail >= 1) {
@@ -35,6 +35,25 @@ export class UsersController {
             console.error(err)
             return res.status(400).json({ message: err })
         }
+    }
+
+    signIn = async (req, res) => {
+        const { email, password } = req.body;
+
+        const findEmail = await this.usersService.findEmail(email);
+
+        if (findEmail >= 0) {
+            return res.status(400).json({ message: '이메일이 존재하지 않습니다' });
+        }
+        if (password !== findEmail[0].password) {
+            return res.status(400).json({ message: '패스워드가 일치하지 않습니다' });
+        }
+
+        const token = await this.usersService.createToken(email, password);
+
+        res.header('token', `Bearer ${token}`);
+
+        return res.status(200).json({ message: "로그인 성공" });
     }
 
 }

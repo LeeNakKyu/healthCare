@@ -25,6 +25,18 @@ export class UsersService {
         }
     }
 
+    checkPassword = async (password, hashedPassword) => {
+        try{
+            
+            const checkPassword = await bcrypt.compare(password, hashedPassword)
+            
+            return checkPassword;
+
+        } catch (err){
+            console.error(err)
+        }
+    }
+
 
     createToken = async (email, password) => {
 

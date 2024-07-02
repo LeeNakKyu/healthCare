@@ -3,9 +3,9 @@ import mongoose from 'mongoose';
 const connect = () => {
   mongoose
     .connect(
-      'mongodb+srv://helthCare:helthCare1055@helthcare.yxlyciz.mongodb.net/?retryWrites=true&w=majority&appName=helthCare',
+      'mongodb+srv://helthCare:helthCare1055@healthcare.iuzx6q6.mongodb.net/?retryWrites=true&w=majority&appName=healthCare',
       {
-        dbName: 'helthCare', // 데이터베이스명을 사용합니다.
+        dbName: 'healthCare', // 데이터베이스명을 사용합니다.
       },
     )
     .catch((err) => console.log(err))

@@ -45,7 +45,10 @@ export class UsersController {
         if (findEmail >= 0) {
             return res.status(400).json({ message: '이메일이 존재하지 않습니다' });
         }
-        if (password !== findEmail[0].password) {
+
+        const checkPassword = await this.usersService.checkPassword(password, findEmail[0].password);
+
+        if (!checkPassword) {
             return res.status(400).json({ message: '패스워드가 일치하지 않습니다' });
         }
 

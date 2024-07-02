@@ -1,12 +1,14 @@
 import { UsersRepository } from "../repositories/users.Repository.js";
 import JWT from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
 export class UsersService {
     usersRepository = new UsersRepository();
 
     signUp = async (email, password, name, height, weight) => {
         try {
+            const hashedPassword = await bcrypt.hash(password, 10);
 
-            return await this.usersRepository.signUp(email, password, name, height, weight);
+            return await this.usersRepository.signUp(email, hashedPassword, name, height, weight);
 
         } catch (err) {
             console.error(err)

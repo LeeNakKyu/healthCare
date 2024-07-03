@@ -18,6 +18,7 @@ export class UsersRepository {
     findUserInfo = async (email) => {
         try {
 
+            // email과 일치하는 데이터 찾기
             const existEmail = await users.find({ email: email }) // 배열로 반환
             console.log(existEmail)
             if (existEmail) {

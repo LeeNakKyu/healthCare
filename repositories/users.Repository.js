@@ -15,7 +15,7 @@ export class UsersRepository {
         }
     }
 
-    findEmail = async (email) => {
+    findUserInfo = async (email) => {
         try {
 
             const existEmail = await users.find({ email: email }) // 배열로 반환

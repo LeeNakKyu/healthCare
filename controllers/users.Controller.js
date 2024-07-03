@@ -6,9 +6,9 @@ export class UsersController {
         try {
             const { email, password, name, height, weight } = req.body;
 
-            const existEmail = await this.usersService.findEmail(email);
+            const user = await this.usersService.findUserInfo(email);
 
-            if (!email || existEmail >= 1) {
+            if (!email || user >= 1) {
                 return res.status(400).json({ message: "email 을 입력해주세요" })
             }
             if (!password) {
@@ -40,13 +40,13 @@ export class UsersController {
     signIn = async (req, res) => {
         const { email, password } = req.body;
 
-        const findEmail = await this.usersService.findEmail(email);
+        const findUserInfo = await this.usersService.findUserInfo(email);
 
-        if (findEmail >= 0) {
+        if (findUserInfo.length === 0) {
             return res.status(400).json({ message: '이메일이 존재하지 않습니다' });
         }
 
-        const checkPassword = await this.usersService.checkPassword(password, findEmail[0].password);
+        const checkPassword = await this.usersService.checkPassword(password, findUserInfo[0].password);
 
         if (!checkPassword) {
             return res.status(400).json({ message: '패스워드가 일치하지 않습니다' });

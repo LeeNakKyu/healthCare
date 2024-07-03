@@ -39,7 +39,7 @@ export class UsersController {
 
     signIn = async (req, res) => {
         const { email, password } = req.body;
-
+        
         const findUserInfo = await this.usersService.findUserInfo(email);
 
         if (findUserInfo.length === 0) {
@@ -54,9 +54,24 @@ export class UsersController {
 
         const token = await this.usersService.createToken(email, password);
 
-        res.header('token', `Bearer ${token}`);
+        res.cookie('authorization', `Bearer ${token}`);
 
         return res.status(200).json({ message: "로그인 성공" });
+    }
+
+    profile = async (req, res, next) => {
+        const userInfo = req.user;
+
+        const findUserInfo = await this.usersService.findUserInfo(userInfo[0].email); // (userInfo에 email밖에 없다고 가졍했을 시)
+
+        if (findUserInfo.length === 0) {
+            return res.status(400).json({ message: '사용자가 존재하지 않습니다' });
+        }
+
+        return res.status(200).json({
+            message: '프로필 조회 성공',
+            data: findUserInfo
+        })
     }
 
 }
